@@ -4,5 +4,5 @@ bibentry(bibtype = "article",
   title  = "Isotonic subgroup selection",
   author = c(as.person("Manuel M. Müller"), as.person("Henry W. J. Reeve"), as.person("Timothy I. Cannings"), as.person("Richard J. Samworth")),
       year= "2023",
-      journal="arXiv preprint arXiv:2305.04852"
+      journal="arXiv preprint arXiv:2305.04852v2"
 )

@@ -29,7 +29,7 @@ dag_test_ISS <- function(X0, p, alpha) {
   # just as well only look at the else-branch.
 
   if (d == 1) {
-    dag_test_FS(X0 = X0, p = p, alpha = alpha)
+    dag_test_FS(p_order = X0, p = p, alpha = alpha, decreasing = TRUE)
   } else {
     iG <- get_DAG(X0, sparse = FALSE)
     iF <- get_DAG(X0, sparse = TRUE, twoway = TRUE)

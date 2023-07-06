@@ -4,25 +4,27 @@
 \alias{dag_test_FS}
 \title{dag_test_FS}
 \usage{
-dag_test_FS(X0, p, alpha)
+dag_test_FS(p_order, p, alpha, decreasing = FALSE)
 }
 \arguments{
-\item{X0}{a numeric vector or matrix with one column giving points corresponding to hypotheses.}
+\item{p_order}{a numeric vector or matrix with one column whose order determines the sequence of tests.}
 
-\item{p}{a numeric vector taking values in (0, 1] such that \code{length(p) == nrow(X0)} if X0 is a matrix (or \code{length(p) == length(X0)} if X0 is a numeric vector).}
+\item{p}{a numeric vector taking values in (0, 1] such that \code{length(p) == nrow(p_order)} if p_order is a matrix (or \code{length(p) == length(p_order)} if p_order is a numeric vector).}
 
 \item{alpha}{a numeric value in (0, 1] specifying the Type I error rate.}
+
+\item{decreasing}{a boolean value determining whether the order of p_order should be understood in decreasing order.}
 }
 \value{
 A boolean vector of the same length as \code{p} with each element being \code{TRUE} if the corresponding hypothesis is rejected and \code{FALSE} otherwise.
 }
 \description{
-Implements the fixed sequence testing procedure of familywise error rate control. The sequence is given through ordering elements of \code{X0} decreasingly.
+Implements the fixed sequence testing procedure of familywise error rate control. The sequence is given through ordering elements of \code{p_order} increasingly.
 }
 \examples{
-X0 <- c(0.5, 0, 1)
+p_order <- c(0.5, 0, 1)
 p <- c(0.01, 0.1, 0.05)
 alpha <- 0.05
-dag_test_FS(X0, p, alpha)
+dag_test_FS(p_order, p, alpha, decreasing = TRUE)
 
 }

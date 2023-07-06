@@ -41,7 +41,7 @@ dag_test_MG <- function(X0, p, alpha, version = c("all", "any"), leaf_weights, s
   # just as well only look at the else-branch.
 
   if (d == 1) {
-    dag_test_FS(X0 = X0, p = p, alpha = alpha)
+    dag_test_FS(p_order = X0, p = p, alpha = alpha, decreasing = TRUE)
   } else {
 
     # Calculate the ancestors and parents of each hypothesis in the induced graph and

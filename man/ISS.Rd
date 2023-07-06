@@ -10,11 +10,15 @@ ISS(
   tau,
   alpha = 0.05,
   m = nrow(X),
-  p_value = c("sub-Gaussian-normalmixture", "sub-Gaussian", "classification"),
+  p_value = c("sub-Gaussian-normalmixture", "sub-Gaussian", "Gaussian", "classification",
+    "quantile"),
   sigma2,
   rho = 1/2,
-  DAG_testing_procedure = c("ISS", "Holm", "MG all", "MG any"),
-  minimal = FALSE
+  FWER_control = c("ISS", "Holm", "MG all", "MG any", "split", "split oracle"),
+  minimal = FALSE,
+  split_proportion = 1/2,
+  eta = NA,
+  theta = 1/2
 )
 }
 \arguments{
@@ -29,26 +33,33 @@ ISS(
 \item{m}{an integer value between 1 and \code{nrow(X)} specifying the size of
 the subsample of \code{X} at which the hypotheses should be tested.}
 
-\item{p_value}{one of \code{c("sub-Gaussian", "sub-Gaussian-normalmixture", "classification")} specifying
-which p-value construction should be used. See Definitions 1, 18 and 19 by \insertCite{MRCS2023;textual}{ISS} respectively.}
+\item{p_value}{one of \code{c("sub-Gaussian", "sub-Gaussian-normalmixture", "Gaussian", "classification", "quantile")} specifying
+which p-value construction should be used. See Definitions 1, 18, 19 and 21 and Lemma 24 by \insertCite{MRCS2023v2;textual}{ISS} respectively.
+For \code{p_value == "quantile"}, the version with the p-value from Definition 19 is implemented.}
 
-\item{sigma2}{a single positive numeric value specifying the variance parameter (only needed if \code{p_value == "sub-Gaussian"} or \code{p_value == "sub-Gaussian-normalmixture"}).}
+\item{sigma2}{a single positive numeric value specifying the variance parameter (only needed if \code{p_value \%in\% c("sub-Gaussian", "sub-Gaussian-normalmixture")}).}
 
 \item{rho}{a single positive numeric value serving as hyperparameter (only used if \code{p_value == "sub-Gaussian-normalmixture"}).}
 
-\item{DAG_testing_procedure}{one of \code{c("ISS", "Holm", "MG all", "MG any")}, specifying how the
-familywise error rate is controlled. The first corresponds to Algorithm 1 by \insertCite{MRCS2023;textual}{ISS},
-the second is Holm's procedure and the final two correspond to the procedures due to \insertCite{meijer2015multiple;textual}{ISS}
-for one-way logical relationships.}
+\item{FWER_control}{one of \code{c("ISS", "Holm", "MG all", "MG any", "split", "split oracle")}, specifying how the
+familywise error rate is controlled. The first corresponds to Algorithm 1 by \insertCite{MRCS2023v2;textual}{ISS},
+the second is Holm's procedure, the two starting with "MG" correspond to the procedures by \insertCite{meijer2015multiple;textual}{ISS}
+for one-way logical relationships, and the final two containing "split" to the sample splitting techniques in Appendix B of \insertCite{MRCS2023v2;textual}{ISS}.}
 
 \item{minimal}{a logical value determining whether the output should be reduced to the minimal number of points leading to the same selected set.}
+
+\item{split_proportion}{when \code{FWER_control \%in\% c("split", "split oracle")}, the number of data points in the first split of the data is \code{ceiling(split_proportion * nrow(X))}.}
+
+\item{eta}{when \code{FWER_control == "split oracle"}, this parameter needs to be used to provide the true regression function, which should take a vector of covariates as inputs and output a single numeric value.}
+
+\item{theta}{a single numeric value in (0, 1) specifying the quantile of interest when \code{p_value_method == "quantile"}. Defaults to 1/2, i.e.~the median.}
 }
 \value{
 A numeric matrix giving the points in \code{X} determined to lie in the \code{tau}-superlevel set of the regression function with probability at least 1 - \code{alpha} or, if \code{minimal == TRUE}, a subset of points thereof that have the same upper hull.
 }
 \description{
 The function implements the combination of p-value calculation and familywise
-error rate control through DAG testing procedures described in \insertCite{MRCS2023;textual}{ISS}.
+error rate control through DAG testing procedures described in \insertCite{MRCS2023v2;textual}{ISS}.
 }
 \examples{
 d <- 2
@@ -96,7 +107,5 @@ if (d == 2) {
 
 }
 \references{
-\insertRef{meijer2015multiple}{ISS}
-
-\insertRef{MRCS2023}{ISS}
+\insertAllCited{}
 }

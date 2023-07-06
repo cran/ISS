@@ -20,7 +20,7 @@ get_p_classification(X, y, x0, tau)
 A single numeric value in (0, 1].
 }
 \description{
-Calculate the p-value in Definition 19 of \insertCite{MRCS2023;textual}{ISS}.
+Calculate the p-value in Definition 21 of \insertCite{MRCS2023;textual}{ISS}.
 }
 \examples{
 set.seed(123)

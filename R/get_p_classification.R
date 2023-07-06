@@ -1,6 +1,6 @@
 #' get_p_classification
 #'
-#' Calculate the p-value in Definition 19 of \insertCite{MRCS2023;textual}{ISS}.
+#' Calculate the p-value in Definition 21 of \insertCite{MRCS2023;textual}{ISS}.
 #'
 #' @param X a numeric matrix specifying the covariates.
 #' @param y a numeric vector with \code{length(y) == nrow(X)} and \code{all((y >= 0) & (y <= 1))} specifying the responses.
